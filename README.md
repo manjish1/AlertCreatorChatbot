@@ -93,7 +93,7 @@ When you start the app, it will automatically validate performance using the `"v
 
 ## 📄 License
 
-MIT License *(or insert your preferred license)*
+MIT License 
 
 ---
 
@@ -101,5 +101,5 @@ MIT License *(or insert your preferred license)*
 
 - [Hugging Face – Sentence Transformers](https://www.sbert.net/)
 - [Flask Web Framework](https://flask.palletsprojects.com/)
-- Your organization or team if applicable
+- Manjish Naik
 # AlertCreatorChatbot
