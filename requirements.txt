@@ -1,0 +1,4 @@
+Flask
+sumy
+python-docx
+werkzeug

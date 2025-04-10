@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summarized Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+        .header img {
+            height: 50px;
+            margin-right: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        .summary-box {
+            background-color: #e0f7fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="{{ url_for('static', filename='JBT_Marel_Logo.png') }}" alt="JBT Marel Logo">
+    <h1>Summarized Reports</h1>
+</div>
+
+<div class="container">
+    <h2>Summary Results</h2>
+    {% for filename, summary in summaries.items() %}
+        <div class="summary-box">
+            <h3>{{ filename }}</h3>
+            <p>{{ summary }}</p>
+        </div>
+    {% endfor %}
+    <a href="/">Upload More Files</a>
+</div>
+
+</body>
+</html>

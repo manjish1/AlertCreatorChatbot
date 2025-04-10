@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JBT Marel Service Technician Report Summarizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            height: 50px;
+            margin-right: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .spinner-border {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #summary-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .card {
+            background-color: #e0f7fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .text-danger {
+            color: red;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="header">
+        <img src="{{ url_for('static', filename='JBT_Marel_Logo.png') }}" alt="JBT Marel Logo">
+        <h1>JBT Marel Service Technician Report Summarizer</h1>
+    </div>
+
+    <div class="container">
+        <form id="upload-form" enctype="multipart/form-data">
+            <label for="fileInput" class="form-label"><strong>Upload DOCX files:</strong></label>
+            <input type="file" id="fileInput" name="files" multiple class="form-control" accept=".docx">
+            <button type="submit" class="btn-primary">Summarize</button>
+        </form>
+
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span>Processing...</span>
+            </div>
+        </div>
+
+        <div id="summary-container"></div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#upload-form").submit(function(event){
+                event.preventDefault();
+
+                var formData = new FormData(this);
+                $(".spinner-border").show();
+                $("#summary-container").html("");
+
+                $.ajax({
+                    url: "/", // Corrected URL here
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $(".spinner-border").hide();
+                        $("#summary-container").html("<h3>Summaries:</h3>");
+                        $.each(response, function(filename, summary) {
+                            $("#summary-container").append("<div class='card'><div class='card-body'><h5 class='card-title'>" + filename + "</h5><p class='card-text'>" + summary + "</p></div></div>");
+                        });
+                    },
+                    error: function() {
+                        $(".spinner-border").hide();
+                        $("#summary-container").html("<p class='text-danger'>Error processing files. Please try again.</p>");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
